@@ -125,7 +125,7 @@ Phases 5 and 6 are independent after 4 and 3 respectively; 9 can start any time 
 | Phase | Status | PR |
 | --- | --- | --- |
 | Planning | done | |
-| 0 Scaffold and design system | not started | |
+| 0 Scaffold and design system | done (2026-10-14) | phase-0-scaffold |
 | 1 Supabase, schema, auth, guests | not started | |
 | 2 App shell and main matrix | not started | |
 | 3 Tasks, DnD, structure editing | not started | |
