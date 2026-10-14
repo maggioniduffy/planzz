@@ -9,7 +9,7 @@ const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
       "font-size": [{ text: ["meta", "body", "card", "section", "page"] }],
-      rounded: [{ rounded: ["control", "card"] }],
+      rounded: [{ rounded: ["control", "card", "cell"] }],
       shadow: [{ shadow: ["card", "card-hover"] }],
       tracking: [{ tracking: ["heading"] }],
       ease: [{ ease: ["out-soft"] }],
