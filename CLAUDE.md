@@ -33,7 +33,9 @@ web-push (VAPID) · Brevo · Google Calendar API · @anthropic-ai/sdk (browser, 
   due dates as local date + time + profiles.timezone.
 - Google Calendar is calendar-only: push dated tasks, read events. Routines and reminders never sync to Google.
 - AI write tools always require an explicit Accept in the UI.
-- Uploaded HTML renders only in <iframe sandbox="allow-scripts" srcdoc> (no allow-same-origin).
+- Uploaded HTML renders only in <iframe sandbox="allow-scripts allow-forms allow-modals" srcdoc> (no allow-same-origin). Its scripts must run
+  (e.g. quizzes made with Claude), so the app has no Content-Security-Policy. Never add allow-same-origin.
+- Never render user or AI content with dangerouslySetInnerHTML; markdown and docx go through rehype-sanitize.
 - Colors, radii, fonts only via tokens; no raw hex in components. Respect prefers-reduced-motion.
 - Server state in TanStack Query with optimistic updates + rollback; UI-only state in Zustand.
 - Guests are anonymous Supabase users: same code path, no localStorage data layer.

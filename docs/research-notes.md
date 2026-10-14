@@ -89,9 +89,9 @@ Each phase's "Verify first" list repeats its items with details.
 | 1 | `pg_cron`, `pg_net`, Vault available on the local stack; generated column using `f_unaccent` (immutable wrapper) on PG17 |
 | 2 | Sticky headers in a 2D `overflow: auto` container; `wheel` + `ctrlKey` pinch on macOS Safari/Chrome |
 | 3 | dnd-kit auto-scroll inside a nested scroll container; `chrono-node` version and API; Tiptap v3 markdown extension (`@tiptap/markdown` vs community `tiptap-markdown`) |
-| 4 | `react-markdown` + `remark-gfm` + `rehype-sanitize` versions; `shiki` web bundle size and lazy loading; `mammoth` browser build; `papaparse`; CSP inheritance of `iframe srcdoc` (§4.10 of the execution plan) |
+| 4 | `react-markdown` + `remark-gfm` + `rehype-sanitize` versions; `shiki` web bundle size and lazy loading; `mammoth` browser build; `papaparse`; `iframe srcdoc` sandbox isolation with scripts on (§4.10 of the execution plan) |
 | 6 | FullCalendar v6 React 19 support and CSS variable theming; `date-fns-tz` v3 API (`toZonedTime`, `fromZonedTime`) |
 | 7 | `web-push` options and Node runtime; iOS 16.4+ PWA push constraints and notification actions support per platform; Brevo transactional API; `pg_net.http_post` signature; Vault functions |
 | 8 | Google OAuth scopes (`calendar.app.created`, `calendar.calendarlist.readonly`, `calendar.events.readonly`) and verification rules; Calendar v3 `extendedProperties` |
-| 9 | `@anthropic-ai/sdk` `dangerouslyAllowBrowser`, streaming tool-use helpers, model ids; Next 16 CSP nonce in `proxy.ts` |
+| 9 | `@anthropic-ai/sdk` `dangerouslyAllowBrowser`, streaming tool-use helpers, model ids |
 | 10 | `@axe-core/playwright` usage; Vercel production cron and env setup |

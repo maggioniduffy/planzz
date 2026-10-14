@@ -152,7 +152,7 @@ Item states: active → done (`completed_at`), archive (Done tasks older than 14
 | Format | Viewer |
 | --- | --- |
 | `.md` (uploaded or created in-app) | `react-markdown` + `remark-gfm` + `rehype-sanitize`; in-app docs are editable (Tiptap) |
-| `.html` | Sandboxed `<iframe srcdoc>` with `sandbox="allow-scripts"` and no `allow-same-origin`, so page scripts can never reach the app's cookies or storage |
+| `.html` | Interactive: scripts run, so self-contained apps such as a quiz made with Claude work. Sandboxed `<iframe srcdoc>` with `sandbox="allow-scripts allow-forms allow-modals"` and no `allow-same-origin`, so page scripts can never reach the app's cookies or storage |
 | `.pdf` | Browser PDF viewer in an iframe on a signed URL; first-page thumbnail via `pdfjs-dist` |
 | Images | Lightbox with zoom |
 | `.txt`, code, `.json`, `.csv` | `shiki` syntax highlighting; CSV as a table (`papaparse`) |
@@ -752,13 +752,13 @@ All user mutations follow the Things pattern: optimistic cache patch in TanStack
 3. Streaming loop in the browser with `@anthropic-ai/sdk`: read tools run immediately via supabase-js; write tools render a confirm card and wait; results return as `tool_result`; max 8 tool rounds per turn.
 4. Messages persist to `ai_threads` / `ai_messages`. The key is never written to the database or sent to Planzz routes.
 5. Errors: 401 → "Key rejected, check Settings"; 429/529 → retry with backoff, then a toast; network off → disabled input.
-6. Security: a strict CSP (no inline scripts, `connect-src` limited to Supabase, Anthropic and the app) reduces XSS risk to the stored key; the HTML doc viewer is sandboxed without same-origin so uploaded HTML can never read it.
+6. Security: no Content-Security-Policy in v1 (a CSP would be inherited by the `srcdoc` iframe and stop the scripts in uploaded HTML). XSS risk to the stored key is kept down by sanitizing every rendered markdown/docx/AI message, never using `dangerouslySetInnerHTML` on user content, and the HTML doc viewer being sandboxed without same-origin, so uploaded HTML can never read the key.
 
 **Documents**
 
 - Upload: same pipeline as Things files (row first, direct upload to Storage with the user JWT, TUS above 6 MB, client thumbnails), into `resources` with `kind = 'file'`.
 - In-app markdown doc: `kind = 'doc'`, `body` edited with Tiptap, autosaved with a 1 s debounce.
-- Viewing HTML: fetch the file text through a signed URL (cap 2 MB), render with `<iframe sandbox="allow-scripts" srcdoc>`; links open in a new tab via `allow-popups` only if the user toggles "Allow links".
+- Viewing HTML: fetch the file text through a signed URL (cap 2 MB), render with `<iframe sandbox="allow-scripts allow-forms allow-modals" srcdoc>` (scripts, forms and `alert`/`confirm` work; `localStorage` does not, because the frame has an opaque origin); links open in a new tab via `allow-popups` only if the user toggles "Allow links".
 - Viewing `.docx`: `mammoth` → HTML → `rehype-sanitize` → rendered in the app (no iframe needed).
 
 **Routines**
@@ -807,7 +807,7 @@ Eleven phases, all MVP, each one Claude Code session (or one PR) with a "done" g
    - OAuth connect/callback, Vault storage, calendar linking UI, outbox trigger + worker, event read endpoint, "Make a task" from an event, revoked-token handling.
    - **Done when:** a task with a time block appears in the linked Google calendar within 2 minutes, moves when rescheduled, gets "✓" when done and disappears when deleted; Google events show read-only in the axis calendar.
 10. **Phase 9 — AI chat**
-    - Key settings + validation, ChatDock, streaming loop, tool schemas and executors, confirm cards, thread persistence, context builder, CSP.
+    - Key settings + validation, ChatDock, streaming loop, tool schemas and executors, confirm cards, thread persistence, context builder.
     - **Done when:** "Create 3 study tasks for Física II this week" proposes 3 tasks, creates them only after Accept, and they appear in the matrix; the key never appears in any network request to the app's own domain or in the database.
 11. **Phase 10 — Search, palette, polish, release**
     - `search_all` RPC, search field, ⌘K with tasks/docs/actions/navigation, every shortcut.
@@ -901,7 +901,7 @@ web-push (VAPID) · Brevo · Google Calendar API · @anthropic-ai/sdk (browser, 
   due dates as local date + time + profiles.timezone.
 - Google Calendar is calendar-only: push dated tasks, read events. Routines and reminders never sync to Google.
 - AI write tools always require an explicit Accept in the UI.
-- Uploaded HTML renders only in <iframe sandbox="allow-scripts" srcdoc> (no allow-same-origin).
+- Uploaded HTML renders only in <iframe sandbox="allow-scripts allow-forms allow-modals" srcdoc> (no allow-same-origin). No CSP: it would stop those scripts.
 - Colors, radii, fonts only via tokens; no raw hex in components. Respect prefers-reduced-motion.
 - Server state in TanStack Query with optimistic updates + rollback; UI-only state in Zustand.
 - UI copy in English, sentence case.
@@ -951,9 +951,9 @@ v1 runs at $0 for one person; AI is paid by each user's own key. Figures are app
 | iOS push only works for installed PWAs | Detect and guide installation; email channel as fallback |
 | Google OAuth in "Testing" mode expires refresh tokens after about 7 days | Publish the OAuth app "In production" (unverified warning, 100-user cap) before relying on sync |
 | Duplicate or missed reminders (retries, DST, timezone changes) | Idempotent `notifications` unique key, row locks with `locked_until`, pure tested `next-fire.ts`, recompute on timezone change |
-| BYOK key in `localStorage` exposed to XSS | Strict CSP, sanitized markdown/docx, sandboxed HTML viewer, "don't remember" option |
+| BYOK key in `localStorage` exposed to XSS | Sanitized markdown/docx/AI output, no raw HTML from users in the app document, sandboxed HTML viewer, "don't remember" option. No CSP (decided 2026-10-14 so uploaded HTML can run scripts) |
 | AI model writes wrong data | Confirm card on every write tool; Undo toast after accept |
-| Uploaded HTML runs scripts | `sandbox="allow-scripts"` without same-origin via `srcdoc`; never served from the app origin |
+| Uploaded HTML runs scripts (wanted: interactive quizzes) | Sandboxed `srcdoc` iframe without same-origin: opaque origin, no access to cookies, storage or the parent page; never served from the app origin |
 | Google edits to Planzz events lost on next push | One-way contract shown in the UI; two-way sync in v2 |
 | Main matrix gets dense with many axes or tasks | Max 8 axes / 6 statuses, Overview level, Done collapsed, auto-archive after 14 days |
 

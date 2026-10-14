@@ -1,6 +1,6 @@
 # Phase 9 — AI chat (BYOK)
 
-**Goal:** a chat dock where the user's own Anthropic key talks to the model directly from the browser, with read tools over their data and write tools that run only after Accept; threads saved per account; a strict CSP.
+**Goal:** a chat dock where the user's own Anthropic key talks to the model directly from the browser, with read tools over their data and write tools that run only after Accept; threads saved per account. No CSP (README §4.10).
 
 **Branch:** `phase-9-ai-chat` · **Read first:** CLAUDE.md · plan §Features (AI chat), §Key flows (AI chat), §Risks (BYOK key, AI writes) · README §4.10, §4.22 · research-notes queue for Phase 9.
 
@@ -8,8 +8,6 @@
 
 - `@anthropic-ai/sdk` current version: `dangerouslyAllowBrowser`, streaming with tool use (`messages.stream`, tool_use / tool_result blocks), error classes for 401/429/529, the browser access header.
 - Current model ids (Haiku default, Sonnet option) and their tool-use support.
-- Next 16 CSP with nonces set in `proxy.ts`; effect on static rendering; `connect-src` for Supabase (incl. storage), Anthropic, the app.
-- Confirm the `iframe srcdoc` CSP inheritance result from 4.0 against the final CSP.
 
 ## Owner actions
 
@@ -25,7 +23,7 @@ O10 (a key for the manual check). e2e mocks Anthropic.
 | 9.4 | I | `lib/ai/client.ts`: streaming loop, read tools run immediately, write tools pause for confirmation, max 8 tool rounds per turn, errors (401 → "Key rejected, check Settings"; 429/529 → backoff then toast; offline → disabled input), abort | `src/lib/ai/client.ts` | unit tests with a scripted fake stream |
 | 9.5 | I | `ChatDock` (⌘J, right dock; bottom sheet on mobile): message list with streaming markdown (sanitized), `ToolCard` for reads, `ConfirmCard` for writes ("Create 3 tasks in Study → Física II?" Accept / Reject), Undo toast after Accept, suggested prompts, thread switcher (per axis optional) | `src/components/ai/*` | — |
 | 9.6 | I | Persistence: `ai_threads` / `ai_messages` CRUD (provider-neutral content blocks), titles from the first message | `src/lib/ai/threads.ts` | — |
-| 9.7 | I | CSP: nonce-based policy in `proxy.ts` (`script-src 'nonce-…' 'strict-dynamic'`, `connect-src` self + Supabase + `https://api.anthropic.com`, `frame-src` for PDF signed URLs, `object-src 'none'`); apply README §4.10 decision to the HTML viewer | `src/proxy.ts`, `next.config.js` | no CSP violations on any route (Playwright console check) |
+| 9.7 | T | XSS sweep instead of a CSP (README §4.10): grep for `dangerouslySetInnerHTML` and unsanitized markdown/docx/AI rendering; e2e with a doc, task note and AI reply containing `<img src=x onerror=…>` and `<script>` → nothing executes in the app document; uploaded HTML still runs | `e2e/xss.spec.ts` | zero findings |
 | 9.8 | T | e2e with mocked Anthropic (`page.route`): "Create 3 study tasks for Física II this week" → confirm card with 3 tasks → nothing written before Accept → Accept → 3 tasks in the matrix; network log: the key appears only in requests to `api.anthropic.com`; DB check: no column contains the key | `e2e/ai*.spec.ts`, `e2e/fakes/anthropic.ts` | green |
 | 9.9 | O | Gate with a real key (O10); CHANGELOG | — | see Done when |
 
