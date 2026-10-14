@@ -1,0 +1,12 @@
+.next
+node_modules
+coverage
+playwright-report
+test-results
+pnpm-lock.yaml
+src/types/database.types.ts
+next-env.d.ts
+docs
+.claude
+CLAUDE.md
+CHANGELOG.md
