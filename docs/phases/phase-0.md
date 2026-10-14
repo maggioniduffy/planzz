@@ -15,6 +15,7 @@
 
 - **Copy Things' scaffold instead of running create-next-app** (it refuses non-empty directories and Things' config is already tuned). Rename the package to `planzz`; drop dependencies Planzz does not need yet (they come back in the phase that uses them).
 - Logo: wordmark + 2×2 matrix glyph placeholder (README §4.15).
+- **Pin next + eslint-config-next to 16.4.1**, not Things' 16.4.0 (research, 2026-10-14: 16.4.1 fixes two critical RCEs and a Server Actions DoS). React stays 19.3.0 (19.3.1 has no security fixes). Accepted: `braces` ≤ 3.0.3 advisory GHSA-vfj7-8cjw-p6xm via eslint-config-next. It is lint-time only and has no patched release; recheck in Phase 10.
 
 ## Tasks
 

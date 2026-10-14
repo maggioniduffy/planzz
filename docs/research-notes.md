@@ -10,7 +10,7 @@ The first section is inherited from the Things project (`maggioniduffy/things`, 
 
 | Package | Version | Note |
 | --- | --- | --- |
-| next / eslint-config-next | 16.4.x | Node ≥ 22.19 (undici 8, pdfjs-dist 6.4) |
+| next / eslint-config-next | 16.4.1 (exact) | Node ≥ 22.19 (undici 8, pdfjs-dist 6.4). ≥ 16.4.1 required: fixes GHSA-673q-mjm6-r5xr, GHSA-2464-fhr4-w9xw (critical RCE), GHSA-p3m5-59mp-jv5r (verified 2026-10-14, Phase 0) |
 | react / react-dom | 19.3.x | |
 | tailwindcss / @tailwindcss/turbopack | 4.x | `@theme` in `globals.css`; the scaffold wires Tailwind through `turbopack.rules`, not PostCSS |
 | shadcn (CLI) | 4.21.x | `pnpm dlx shadcn@4.21 init -t next -b radix`; no `--base-color` flag |

@@ -143,7 +143,7 @@ Non-blocking review findings, each with the task that fixes it.
 
 | Finding | Fix in |
 | --- | --- |
-| — | — |
+| `braces` ≤ 3.0.3 advisory GHSA-vfj7-8cjw-p6xm (via eslint-config-next, lint-time only, no patched release on 2026-10-14) | Phase 10 dependency audit |
 
 ## 8. Session kickoff prompt (paste at the start of each phase)
 
