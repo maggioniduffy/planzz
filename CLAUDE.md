@@ -50,6 +50,9 @@ web-push (VAPID) · Brevo · Google Calendar API · @anthropic-ai/sdk (browser, 
 - tester (Haiku): tests, long mechanical tasks. Never edits product code to pass tests.
 - implementer (Sonnet): implements phase-plan tasks and Opus's fix lists; escalates design changes.
 - Loop: plan (Opus) -> implement (Sonnet) -> test (Haiku) -> review (Opus) -> fixes -> done gate.
+- Keep test runs lean: each suite runs once per task (tester), not re-run by the orchestrator, never repeated for variance.
+  Visual checks (screenshots, Lighthouse, browser viewing) are the owner's: list them at the gate, don't run them.
+  Full `pnpm e2e` runs once, at the done gate. See docs/phases/README.md §2.
 
 ## Commands
 pnpm dev · pnpm typecheck · pnpm lint · pnpm test · pnpm e2e

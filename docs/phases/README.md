@@ -41,6 +41,7 @@ Opus: review diff + test report against the task's acceptance checks
 - Research that contradicts the spec goes into `docs/research-notes.md`; the spec stays as written and research notes win.
 - Every phase ends green: `pnpm typecheck && pnpm lint && pnpm test`, plus `pnpm supabase test db` and `pnpm e2e` from Phase 1 on.
 - Non-blocking review findings go into §7 (Carried-over findings) with the task that will fix them.
+- **Keep test runs lean** (Faustino, 2026-10-14). Run each suite once per task: the tester runs it and the orchestrator trusts that report instead of rerunning it. No repeated runs to check variance. Visual checks (screenshots, Lighthouse, viewing pages in a browser) are Faustino's: agents don't run them; the gate lists what to check and he runs it. Implementers run only typecheck, lint and the tests touching their task. The full `pnpm e2e` runs once, at the done gate.
 
 ### Task table conventions
 
