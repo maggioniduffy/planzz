@@ -225,7 +225,19 @@ Rule kept from Things: during an active dnd-kit drag, no Motion `layout` animati
 
 The browser talks to Supabase directly for all CRUD under RLS, and to Anthropic directly for AI with the user's own key. Next.js server code only does what needs a secret or a third-party fetch: link unfurl, Google OAuth and Calendar calls, and the reminder dispatcher that Postgres `pg_cron` calls every minute.
 
-&#91;embedded content: architecture · browser, Next.js, Supabase, external services\]
+```
+                 ┌──────────────────────────── Browser (PWA) ───────────────────────────┐
+                 │ React app · TanStack Query · Zustand · service worker (push)         │
+                 └───┬───────────────────────┬──────────────────────────┬───────────────┘
+   CRUD under RLS    │      AI (BYOK key)    │     unfurl, Google,      │ push messages
+   (supabase-js)     │                       │     /n/[token]           │
+                     ▼                       ▼                          ▼
+ ┌────────────── Supabase ──────────────┐  Anthropic API   ┌──── Next.js on Vercel ────┐
+ │ Postgres + RLS · Storage · Auth      │                  │ /api/unfurl               │
+ │ Vault (Google refresh tokens)        │◄─────────────────┤ /api/google/*  (secret)   │──► Google Calendar API
+ │ pg_cron ── pg_net (every minute) ────┼─────────────────►│ /api/cron/*    (secret)   │──► Brevo (email)
+ └──────────────────────────────────────┘                  └───────────────────────────┘──► Web Push services
+```
 
 The browser does almost everything; Next.js only holds the Google, email, push and cron secrets, and Postgres decides when the server wakes up.
 
