@@ -65,4 +65,19 @@ describe("SegmentedControl", () => {
       "focus-visible:outline-ring",
     );
   });
+
+  it("marks the selected item with data-state on", async () => {
+    render(<Harness />);
+    expect(screen.getByRole("radio", { name: "Matrix" })).toHaveAttribute("data-state", "on");
+    expect(screen.getByRole("radio", { name: "Docs" })).toHaveAttribute("data-state", "off");
+  });
+
+  it("moves focus back with ArrowLeft without changing the selection", async () => {
+    render(<Harness />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}");
+    await userEvent.keyboard("{ArrowLeft}");
+    expect(screen.getByRole("radio", { name: "Matrix" })).toHaveFocus();
+    expect(screen.getByRole("radio", { name: "Matrix" })).toBeChecked();
+  });
 });

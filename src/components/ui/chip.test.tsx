@@ -56,4 +56,36 @@ describe("Chip", () => {
     await userEvent.click(screen.getByRole("button", { name: "Remove Errands" }));
     expect(onRemove).toHaveBeenCalledTimes(1);
   });
+
+  it("reflects a pressed prop as aria-pressed", () => {
+    render(<Chip label="Work" pressed onPressedChange={() => {}} />);
+    expect(screen.getByRole("button", { name: "Work" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("toggles with Space as well as Enter", async () => {
+    render(<Harness />);
+    await userEvent.tab();
+    await userEvent.keyboard(" ");
+    expect(screen.getByRole("button", { name: /Errands/ })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("removing does not toggle the pressed state", async () => {
+    const onRemove = vi.fn();
+    const onPressedChange = vi.fn();
+    render(
+      <Chip
+        label="Errands"
+        pressed={false}
+        onPressedChange={onPressedChange}
+        onRemove={onRemove}
+      />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Remove Errands" }));
+    expect(onRemove).toHaveBeenCalledTimes(1);
+    expect(onPressedChange).not.toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Errands" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+  });
 });
