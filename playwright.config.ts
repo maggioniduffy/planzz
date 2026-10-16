@@ -30,5 +30,7 @@ export default defineConfig({
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
+    // /styleguide is a 404 in production builds unless STYLEGUIDE=1; e2e runs against `next start`.
+    env: { STYLEGUIDE: "1" },
   },
 });
