@@ -13,7 +13,11 @@ export function Footer() {
     <footer className="border-line relative z-10 w-full border-t">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 md:flex-row md:justify-between">
         <div className="flex max-w-xs flex-col gap-4">
-          <Link href="/" aria-label="Planzz, home" className={cn("rounded-control w-fit", focusRing)}>
+          <Link
+            href="/"
+            aria-label="Planzz, home"
+            className={cn("rounded-control w-fit", focusRing)}
+          >
             <Logo />
           </Link>
           <p className="text-body text-ink-muted">One screen to see your life.</p>
