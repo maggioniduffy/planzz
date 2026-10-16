@@ -125,7 +125,7 @@ Phases 5 and 6 are independent after 4 and 3 respectively; 9 can start any time 
 | Phase | Status | PR |
 | --- | --- | --- |
 | Planning | done | |
-| 0 Scaffold and design system | not started | |
+| 0 Scaffold and design system | done (on `claude/zealous-ptolemy-l2lpos`) | |
 | 1 Supabase, schema, auth, guests | not started | |
 | 2 App shell and main matrix | not started | |
 | 3 Tasks, DnD, structure editing | not started | |
@@ -143,7 +143,9 @@ Non-blocking review findings, each with the task that fixes it.
 
 | Finding | Fix in |
 | --- | --- |
-| — | — |
+| Landing links to `/login`, which 404s until Phase 1; Next prefetch logs a console 404 on `/` in production | 1 (login route) |
+| Landing has no "how it works" / guest / FAQ sections (kept short on purpose); `Grain` mounts in the marketing layout, not the root layout | 2 (app shell decides where `Grain` lives) |
+| CI has no e2e job yet | 1 (as planned) |
 
 ## 8. Session kickoff prompt (paste at the start of each phase)
 
