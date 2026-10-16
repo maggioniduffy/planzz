@@ -5,8 +5,8 @@ import { MatrixPreview } from "./matrix-preview";
 
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden">
-      <Aurora />
+    <section className="relative isolate flex min-h-svh flex-col justify-center overflow-hidden">
+      <Aurora className="h-full" />
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-5 pt-28 pb-20 text-center sm:px-8 sm:pt-32 sm:pb-28">
         <h1 className="font-heading tracking-heading text-ink max-w-3xl text-[clamp(2.25rem,7vw,4.5rem)] leading-[1.05] font-semibold text-balance">
           One screen to see your life

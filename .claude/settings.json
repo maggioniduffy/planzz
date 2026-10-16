@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:releasealert.dev)",
+      "Bash(pnpm prettier *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm build *)",
+      "Bash(pnpm format:check)",
+      "Bash(git cherry-pick *)",
+      "Bash(cd /home/faustino/Desktop/Documents/code/planzz; sed -n 36,64p src/app/globals.css; grep -n \"text-\\\\\\(display\\\\|title\\\\|h1\\\\|caption\\\\|small\\\\\\)\" -r src/app/styleguide | head -8; ls /tmp/claude-1000/*/*/scratchpad; ls ~/.cache/ms-playwright; grep -n '\"scripts\"' -A16 package.json)",
+      "Read(//home/faustino/.cache/ms-playwright/**)"
+    ]
+  }
+}

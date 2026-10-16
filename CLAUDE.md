@@ -46,6 +46,7 @@ web-push (VAPID) · Brevo · Google Calendar API · @anthropic-ai/sdk (browser, 
 
 ## Model routing
 - Main session = Opus: orchestration, phase plans, analysis, review. No feature code.
+  * Start tasks in PLAN MODE
 - researcher (Haiku): docs/API verification, data fetching, summaries. Read-only.
 - tester (Haiku): tests, long mechanical tasks. Never edits product code to pass tests.
 - implementer (Sonnet): implements phase-plan tasks and Opus's fix lists; escalates design changes.
