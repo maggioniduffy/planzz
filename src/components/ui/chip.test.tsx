@@ -57,4 +57,19 @@ describe("Chip", () => {
     await userEvent.keyboard("{Enter}");
     expect(screen.getByRole("button", { name: "Work" })).toHaveAttribute("aria-pressed", "true");
   });
+
+  it("disabled chip ignores clicks and keeps its state", async () => {
+    const onChange = vi.fn();
+    render(
+      <Chip pressed={false} onPressedChange={onChange} disabled>
+        Health
+      </Chip>,
+    );
+    const chip = screen.getByRole("button", { name: "Health" });
+    expect(chip).toBeDisabled();
+    expect(chip).toHaveAttribute("aria-pressed", "false");
+    await userEvent.click(chip);
+    expect(onChange).not.toHaveBeenCalled();
+    expect(chip).toHaveAttribute("aria-pressed", "false");
+  });
 });

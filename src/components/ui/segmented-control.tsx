@@ -68,6 +68,10 @@ function SegmentedControl<T extends string = string>({
           key={option.value}
           value={option.value}
           data-slot="segmented-control-item"
+          // Radio behaviour: selection follows focus, so arrow keys select (Radix only moves focus).
+          onFocus={() => {
+            if (option.value !== value) onValueChange(option.value);
+          }}
           className={itemVariants({ size })}
         >
           {option.icon}

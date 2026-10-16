@@ -44,14 +44,15 @@ describe("SegmentedControl", () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it("moves focus with arrow keys and selects with Space", async () => {
+  it("arrow keys move focus and selection together", async () => {
     render(<Harness />);
     await userEvent.tab();
     expect(screen.getByRole("radio", { name: "Alpha" })).toHaveFocus();
+    expect(screen.getByRole("radio", { name: "Alpha" })).toBeChecked();
     await userEvent.keyboard("{ArrowRight}");
     expect(screen.getByRole("radio", { name: "Beta" })).toHaveFocus();
-    await userEvent.keyboard(" ");
     expect(screen.getByRole("radio", { name: "Beta" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Alpha" })).not.toBeChecked();
   });
 
   it("uses the shared focus ring", () => {
@@ -59,5 +60,25 @@ describe("SegmentedControl", () => {
     expect(screen.getByRole("radio", { name: "Alpha" }).className).toContain(
       "focus-visible:outline-ring",
     );
+  });
+
+  it("sm size uses the compact height and text", () => {
+    render(
+      <SegmentedControl
+        aria-label="Zoom"
+        size="sm"
+        value="a"
+        onValueChange={() => {}}
+        options={options}
+      />,
+    );
+    const item = screen.getByRole("radio", { name: "Alpha" });
+    expect(item).toHaveClass("h-7", "text-meta");
+    expect(item).not.toHaveClass("h-8");
+  });
+
+  it("md size is the default", () => {
+    render(<Harness />);
+    expect(screen.getByRole("radio", { name: "Alpha" })).toHaveClass("h-8", "text-body");
   });
 });
