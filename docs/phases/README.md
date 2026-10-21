@@ -104,6 +104,8 @@ Found while analysing `docs/plan.md`. Each one is applied in the phase named. It
 
 ## 5. Phase overview
 
+Scope and "Done when" gates per phase: [index.md](index.md).
+
 | Phase | File | Depends on | Unblocks |
 | --- | --- | --- | --- |
 | 0 Scaffold and design system | [phase-0.md](phase-0.md) | — | all |
@@ -151,7 +153,7 @@ Non-blocking review findings, each with the task that fixes it.
 
 ```
 Phase N. You are the orchestrator (Opus). Read CLAUDE.md, docs/phases/README.md §1–4,
-docs/phases/phase-N.md, the docs/plan.md sections it names, and docs/research-notes.md.
+docs/phases/phase-N.md, the docs/spec files it names (map in docs/plan.md), and docs/research-notes.md.
 1. Send researchers for the phase's "Verify first" list; record findings in docs/research-notes.md.
 2. Run the tasks in order: implementer per task, tester after it, your review, commit per task.
    Parallel only where marked ∥, each in its own worktree.

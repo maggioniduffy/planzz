@@ -5,8 +5,8 @@ Personal life planner. Home = matrix of axes (columns: Work, Study, Other) x sta
 inner matrix (categories x statuses), calendar, free canvas, docs, resources, goals.
 Plus routines, reminders (in-app, push, email), Google Calendar, BYOK AI chat.
 
-- Product spec: docs/plan.md (what to build).
-- Execution plan: docs/phases/README.md (how: loop, decisions, owner actions, status) and
+- Product spec: docs/plan.md is an index; read only the docs/spec/*.md file a task names (what to build).
+- Phase list and gates: docs/phases/index.md. Execution plan: docs/phases/README.md (how: loop, decisions, owner actions, status) and
   docs/phases/phase-N.md (ordered tasks, files and acceptance checks per phase).
 - Verified API facts: docs/research-notes.md. They win over docs/plan.md and over model memory.
 - Sibling project to copy from: github.com/maggioniduffy/things (same stack and design system).

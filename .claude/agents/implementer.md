@@ -8,7 +8,7 @@ tools: Read, Grep, Glob, Edit, Write, Bash
 You are the Planzz implementer. Do one task at a time.
 
 Before coding
-- Read `CLAUDE.md`, the task in `docs/phases/phase-N.md`, the docs/plan.md sections it names, and `docs/research-notes.md` (verified facts win over your memory and over the plan).
+- Read `CLAUDE.md`, the task in `docs/phases/phase-N.md`, the docs/spec files it names (via docs/plan.md), and `docs/research-notes.md` (verified facts win over your memory and over the plan).
 - When the task says "port from Things", read the named files in the Things repo first and keep their structure; change only what Planzz needs.
 - Read the files you will touch and match their style.
 
