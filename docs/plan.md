@@ -13,6 +13,7 @@ The product spec is split by topic so a run loads only what it needs. Read the f
 | Architecture | [spec/architecture.md](spec/architecture.md) | Stack, folders, route handlers |
 | Data model | [spec/data-model.md](spec/data-model.md) | Migrations, RLS, RPCs |
 | Key flows | [spec/key-flows.md](spec/key-flows.md) | Documents, reminders, Google, AI flows |
+| MCP | [spec/mcp.md](spec/mcp.md) | Accessing Planzz data and features through MCP |
 | Costs and limits · Risks · Decisions | [spec/costs-risks-decisions.md](spec/costs-risks-decisions.md) | Phase 10, risk checks |
 | Build phases | [phases/index.md](phases/index.md) | Picking the next phase; "Done when" gates |
 
